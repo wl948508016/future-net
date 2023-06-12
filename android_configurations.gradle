@@ -1,0 +1,38 @@
+ext {
+    android = [
+            applicationId    : "com.future.components.future.net",
+            compileSdk       : 32,
+            targetSdk        : 30,
+            minSdk           : 23,
+            versionCode      : 1,
+            versionName      : "1.0.0"
+    ]
+
+    retrofit_version = '2.9.0'
+    okhttp_version = '4.9.3'
+    future_client_version = '1.0.0'
+
+    client = [
+            FutureClient: "com.github.wl948508016:future-client:${future_client_version}",
+    ]
+
+    retrofitDependancies = [
+            retrofit: "com.squareup.retrofit2:retrofit:${retrofit_version}",
+            converterGson: "com.squareup.retrofit2:converter-gson:${retrofit_version}",
+    ]
+
+    okhttpDependancies = [
+            okhttp: "com.squareup.okhttp3:okhttp:${okhttp_version}",
+            loggingInterceptor:"com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
+    ]
+
+    testDependancies = [
+            junit: 'junit:junit:4.13.2',
+    ]
+
+    androidTestDependancies = [
+            ext: 'androidx.test.ext:junit:1.1.3',
+            espresso: 'androidx.test.espresso:espresso-core:3.4.0'
+    ]
+
+}
