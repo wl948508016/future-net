@@ -57,7 +57,7 @@ class NetworkHelper {
             //添加缓存拦截器 可传入缓存天数，不传默认7天
             addInterceptor(CacheInterceptor())
             // 日志拦截器
-            addInterceptor(HttpLoggingInterceptor { message -> if(BuildConfig.DEBUG) Log.d("————Retrofit————: ", "————网络访问————OkHttp: $message") }.setLevel(HttpLoggingInterceptor.Level.BODY))
+            addInterceptor(HttpLoggingInterceptor { message -> if(isDebug) Log.d("————Retrofit————: ", "————网络访问————OkHttp: $message") }.setLevel(HttpLoggingInterceptor.Level.BODY))
             //超时时间 连接、读、写
             connectTimeout(10, TimeUnit.SECONDS)
             readTimeout(5, TimeUnit.SECONDS)
@@ -92,4 +92,14 @@ class NetworkHelper {
     private val cookieJar: PersistentCookieJar by lazy {
         PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(appContext))
     }
+
+    private var isDebug:Boolean =false
+
+    /**
+     * 是否debug
+     */
+    fun setDebug(b:Boolean){
+        isDebug = b
+    }
+
 }
