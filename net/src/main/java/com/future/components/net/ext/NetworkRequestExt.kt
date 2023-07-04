@@ -37,7 +37,7 @@ fun <T> BaseViewModel.request(
         }.onSuccess {
             runCatching {
                 //校验请求结果码是否正确，不正确会抛出异常走下面的onFailure
-                executeResponse(it,{ t -> success(t) },{ t -> warn(t) })
+                executeResponse(it,{ t -> success(t) },{ t -> error(t) },{ t -> warn(t) })
             }.onFailure { e ->
                 //打印错误消息
                 LogUtils.e(e.message)
@@ -101,29 +101,30 @@ fun <T> BaseViewModel.requestNoCheck(
 suspend fun <T> executeResponse(
     response: BaseResponse<T>,
     success: suspend CoroutineScope.(T) -> Unit,
+    error: (NetException) -> Unit = {},
     warn: suspend CoroutineScope.(T) -> Unit
 ) {
     coroutineScope {
         when {
             response.isSuccess() -> {
                 runCatching {
-                    success(response.data)
+                    success(response.data?:response.rows)
                 }.onFailure {
-                    error(NetException())
+                    error(NetException(response.msg))
                 }
             }
             response.isWarn()->{
                 runCatching {
-                    warn(response.data)
+                    warn(response.data?:response.rows)
                 }.onFailure {
-                    error(NetException())
+                    error(NetException(response.msg))
                 }
             }
             response.isReLogin()->{
                 runCatching {
-                    success(response.data)
+                    success(response.data?:response.rows)
                 }.onFailure {
-                    error(tokenError)
+                    error(NetException(tokenError))
                 }
             }
             else -> {
