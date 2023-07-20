@@ -1,10 +1,10 @@
 package com.future.components.net.ext
 
 import androidx.lifecycle.viewModelScope
-import com.future.components.net.exception.NetException
-import com.future.components.net.model.BaseResponse
 import com.future.components.client.utils.LogUtils
 import com.future.components.client.viewmodel.BaseViewModel
+import com.future.components.net.exception.NetException
+import com.future.components.net.model.BaseResponse
 import kotlinx.coroutines.*
 
 /**
@@ -26,8 +26,8 @@ const val tokenError:String ="登录状态已过期，请重新登录"
 fun <T> BaseViewModel.request(
     block: suspend () -> BaseResponse<T>,
     success:(T) -> Unit,
+    fail: (Int) -> Unit = {},
     error: (NetException) -> Unit = {},
-    warn: (T) -> Unit = {},
 ): Job {
     //如果需要弹窗 通知Activity/fragment弹窗
     return viewModelScope.launch {
@@ -37,7 +37,7 @@ fun <T> BaseViewModel.request(
         }.onSuccess {
             runCatching {
                 //校验请求结果码是否正确，不正确会抛出异常走下面的onFailure
-                executeResponse(it,{ t -> success(t) },{ t -> error(t) },{ t -> warn(t) })
+                executeResponse(it,{ t -> success(t) },{ t -> error(t) },{ t -> fail(t) })
             }.onFailure { e ->
                 //打印错误消息
                 LogUtils.e(e.message)
@@ -102,29 +102,22 @@ suspend fun <T> executeResponse(
     response: BaseResponse<T>,
     success: suspend CoroutineScope.(T) -> Unit,
     error: (NetException) -> Unit = {},
-    warn: suspend CoroutineScope.(T) -> Unit
+    fail: suspend CoroutineScope.(Int) -> Unit
 ) {
     coroutineScope {
         when {
             response.isSuccess() -> {
                 runCatching {
-                    success(response.data?:response.rows)
+                    success(response.data)
                 }.onFailure {
                     error(NetException(response.msg))
                 }
             }
-            response.isWarn()->{
+            response.isFail()->{
                 runCatching {
-                    warn(response.data?:response.rows)
+                    fail(response.error)
                 }.onFailure {
-                    error(NetException(response.msg))
-                }
-            }
-            response.isReLogin()->{
-                runCatching {
-                    success(response.data?:response.rows)
-                }.onFailure {
-                    error(NetException(tokenError))
+                    kotlin.error(NetException())
                 }
             }
             else -> {
