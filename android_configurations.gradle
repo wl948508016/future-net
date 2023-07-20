@@ -4,13 +4,13 @@ ext {
             compileSdk       : 32,
             targetSdk        : 30,
             minSdk           : 23,
-            versionCode      : 1000,
-            versionName      : "joy-1.0.0"
+            versionCode      : 1001,
+            versionName      : "joy-1.0.1"
     ]
 
     retrofit_version = '2.9.0'
     okhttp_version = '4.9.3'
-    future_client_version = '1.0.1'
+    future_client_version = '1.0.2'
 
     client = [
             FutureClient: "com.github.wl948508016:future-client:${future_client_version}",
