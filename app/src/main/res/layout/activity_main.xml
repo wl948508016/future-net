@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.future.components.future.net.ui.MainViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/future_common_10_dp"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:digits="1234567890"
+            android:hint="输入异常支架号"
+            android:inputType="number"
+            android:text="@={vm.zhiNumber}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/future_text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bracketText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.bracket}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/future_text_14"
+            app:layout_constraintStart_toStartOf="@+id/waringLayout"
+            app:layout_constraintEnd_toEndOf="@+id/waringLayout"
+            app:layout_constraintTop_toBottomOf="@+id/edit" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/waringLayout"
+            app:layout_constraintEnd_toEndOf="@+id/waringLayout"
+            app:layout_constraintTop_toBottomOf="@+id/bracketText"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已开启"
+                android:checked="@={vm.status}"/>
+
+            <RadioButton
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关闭"
+                android:checked="@={!vm.status}"/>
+
+        </RadioGroup>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/waringLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            app:layout_constraintStart_toEndOf="@+id/btnRefresh"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/waringTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/future_text_14"
+                android:textColor="@color/black"
+                android:text="预警阈值："/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/waringEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="请输入预警阈值"
+                android:textColor="@color/black"
+                android:textSize="@dimen/future_text_14"
+                android:text="@={vm.waring}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/waringTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/future_text_14"
+                android:textColor="@color/black"
+                android:text="% 滚筒直径百分比"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/alarmLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            app:layout_constraintStart_toStartOf="@+id/waringLayout"
+            app:layout_constraintEnd_toEndOf="@+id/waringLayout"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/waringLayout">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/alarmTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/future_text_14"
+                android:textColor="@color/black"
+                android:text="报警阈值："/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/alarmEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="请输入报警阈值"
+                android:textColor="@color/black"
+                android:textSize="@dimen/future_text_14"
+                android:text="@={vm.alarm}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/alarmTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/future_text_14"
+                android:textColor="@color/black"
+                android:text="% 滚筒直径百分比"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="点击我"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/btnRefresh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="刷新自动控制"
+            app:layout_constraintBottom_toTopOf="@+id/add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/waringLayout"
+            app:layout_constraintTop_toBottomOf="@+id/btn" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="添加异常支架号"
+            app:layout_constraintBottom_toTopOf="@+id/delete"
+            app:layout_constraintEnd_toEndOf="@+id/btnRefresh"
+            app:layout_constraintStart_toStartOf="@+id/btnRefresh"
+            app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="删除异常支架号"
+            app:layout_constraintEnd_toEndOf="@+id/btnRefresh"
+            app:layout_constraintBottom_toTopOf="@+id/refreshBracket"
+            app:layout_constraintStart_toStartOf="@+id/btnRefresh"
+            app:layout_constraintTop_toBottomOf="@+id/add" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/refreshBracket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="刷新异常支架号"
+            app:layout_constraintBottom_toTopOf="@+id/updateCollision"
+            app:layout_constraintEnd_toEndOf="@+id/btnRefresh"
+            app:layout_constraintStart_toStartOf="@+id/btnRefresh"
+            app:layout_constraintTop_toBottomOf="@+id/delete" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/updateCollision"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="更新阈值设置"
+            app:layout_constraintBottom_toTopOf="@+id/refreshCollision"
+            app:layout_constraintEnd_toEndOf="@+id/btnRefresh"
+            app:layout_constraintStart_toStartOf="@+id/btnRefresh"
+            app:layout_constraintTop_toBottomOf="@+id/refreshBracket" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/refreshCollision"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="刷新阈值设置"
+            app:layout_constraintBottom_toTopOf="@+id/collision"
+            app:layout_constraintEnd_toEndOf="@+id/btnRefresh"
+            app:layout_constraintStart_toStartOf="@+id/btnRefresh"
+            app:layout_constraintTop_toBottomOf="@+id/updateCollision" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/collision"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="碰撞"
+            app:layout_constraintBottom_toTopOf="@+id/alarmBtn"
+            app:layout_constraintEnd_toEndOf="@+id/btnRefresh"
+            app:layout_constraintStart_toStartOf="@+id/btnRefresh"
+            app:layout_constraintTop_toBottomOf="@+id/refreshCollision" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/alarmBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/future_common_10_dp"
+            android:padding="@dimen/future_common_15_dp"
+            android:text="预警"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnRefresh"
+            app:layout_constraintStart_toStartOf="@+id/btnRefresh"
+            app:layout_constraintTop_toBottomOf="@+id/collision" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

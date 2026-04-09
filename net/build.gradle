@@ -6,6 +6,7 @@ plugins {
 apply from: '../android_library.gradle'
 
 dependencies {
+    api environments.values()
     api client.values()
     api retrofitDependancies.values()
     //使用OKHttp拦截器

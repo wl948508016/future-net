@@ -4,13 +4,18 @@ ext {
             compileSdk       : 32,
             targetSdk        : 30,
             minSdk           : 23,
-            versionCode      : 4,
-            versionName      : "1.0.3"
+            versionCode      : 5,
+            versionName      : "1.0.4"
     ]
 
     retrofit_version = '2.9.0'
     okhttp_version = '4.9.3'
-    future_client_version = '1.0.2'
+    future_client_version = '1.0.3'
+    mmkv_version = '1.2.9'
+
+    environments = [
+            mmkv: "com.tencent:mmkv-static:${mmkv_version}"
+    ]
 
     client = [
             FutureClient: "com.github.wl948508016:future-client:${future_client_version}",
