@@ -4,13 +4,13 @@ ext {
             compileSdk       : 32,
             targetSdk        : 30,
             minSdk           : 23,
-            versionCode      : 6,
-            versionName      : "1.0.4.1"
+            versionCode      : 7,
+            versionName      : "1.0.4.2"
     ]
 
     retrofit_version = '2.9.0'
     okhttp_version = '4.9.3'
-    future_client_version = '1.0.3.1'
+    future_client_version = '1.0.3.2'
 
     client = [
             FutureClient: "com.github.wl948508016:future-client:${future_client_version}",
